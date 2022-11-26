@@ -24,6 +24,8 @@ class Decision():
         self.z_loc = 0
 
         self.point_list = []
+        self.xyz_global = Odometry
+
 
         
         self.x_global = -0.0764 #home 일 때 x_global 넣으면 될 듯?
@@ -43,8 +45,7 @@ class Decision():
         elif self.mode == "Searching":
             if self.Select_target() == True:
                 self.mode = "Start_tracking"
-            else:
-                self.mode = "Searching"
+        
         #how about adding searching_target?
         elif self.mode == "Start_tracking":
             if self.is_it_tracking == True:
@@ -89,7 +90,11 @@ class Decision():
     def Select_target(self): ########################################################
         # you should deep copy self.point_list
         now_target_list = self.point_list[:] # (x,y,distance) 
-        return 1
+        now_target_list = self.Calculation_XYZ(now_target_list)
+        
+        for (n):
+            check_distance()
+        return True
         ### 이 부분을 Odometry_sensing에서 받은 리스트들을 탐색하는 코드 작성해야한다.
         #sensing팀이 고치기
         # if ok: # workspace 안에 있는 target을 인식할 때
@@ -97,19 +102,18 @@ class Decision():
         # else: # workspace 밖에 있는 target을 인식할 때
         #     return False
 
+    def Check_distance(self,x,y,z): # check distance possible
+        if( )
 
-    def Calculation_XYZ(self):
+    def Calculation_XYZ(self): # pixel to XYZ transform
         #김보겸이 작성 필요
         #x_current, y_current, z_current / x_loc, y_loc, z_loc / 필요하면 degree받아다가 계산해야함
+
         
-        # pose = 
-        self.x_global = 0.2
-        self.y_global = 0.2
-        self.z_global = 0.2
         
         # Odometry msg 형태로 담아서 publish 
         # 도착지점 : Trajectory_planning_node.py/XYZ_target_call()
-        self.pub_xyz_target.publish()
+        self.pub_xyz_target.publish(self.xyz_global)
     
     def Is_it_tracking(self, data):
         self.is_it_tracking = data

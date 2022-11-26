@@ -26,7 +26,7 @@ from dynamixel_sdk import *  # Uses Dynamixel SDK library
 
 DISCRETE_TO_DEGREE = 360 / 4095
 DEGREE_TO_DISCRETE = 4095 / 360
-TOLERANCE_DEGREE = 1
+TOLERANCE_DEGREE = 25
 CRITERIA = TOLERANCE_DEGREE * DEGREE_TO_DISCRETE 
 
 
@@ -177,13 +177,51 @@ class Motor:
         # self.error6 = (goal_position_ID6 - initial_present_position_ID6)
         # self.error7 = (goal_position_ID7 - initial_present_position_ID7)
 
-        dxl_comm_result1, dxl_error1 = self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID1, self.ADDR_GOAL_POSITION, goal_position_ID1)
-        dxl_comm_result2, dxl_error2 = self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID2, self.ADDR_GOAL_POSITION, goal_position_ID2)
-        dxl_comm_result3, dxl_error3 = self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID3, self.ADDR_GOAL_POSITION, goal_position_ID3)
-        dxl_comm_result4, dxl_error4 = self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID4, self.ADDR_GOAL_POSITION, goal_position_ID4)
-        dxl_comm_result5, dxl_error5 = self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID5, self.ADDR_GOAL_POSITION, goal_position_ID5)
-        dxl_comm_result6, dxl_error6 = self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID6, self.ADDR_GOAL_POSITION, goal_position_ID6)
-        dxl_comm_result7, dxl_error7 = self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID7, self.ADDR_GOAL_POSITION, goal_position_ID7)
+        dxl_comm_result, dxl_error = self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID3, self.ADDR_GOAL_POSITION, goal_position_ID1)
+
+
+
+
+
+
+        # if self.error1 > 0:
+        #     VELOCITY_ID1 = P_GAIN * self.error1 * VELOCITY_PER_RESOLUTION
+        # else:
+        #     VELOCITY_ID1 = -P_GAIN * self.error1 * VELOCITY_PER_RESOLUTION
+        
+        # goal_position_ID2 = int((degree2 / 360.0) * 4095)
+        # if self.error2 > 0:
+        #     VELOCITY_ID2 = P_GAIN * self.error2 * VELOCITY_PER_RESOLUTION
+        # else:
+        #     VELOCITY_ID2 = -P_GAIN * self.error2 * VELOCITY_PER_RESOLUTION
+        
+        # goal_position_ID3 = int((degree3 / 360.0) * 4095)
+        # if self.error3 > 0:
+        #     VELOCITY_ID3 = P_GAIN * self.error3 * VELOCITY_PER_RESOLUTION
+        # else:
+        #     VELOCITY_ID3 = -P_GAIN * self.error3 * VELOCITY_PER_RESOLUTION
+        
+        # goal_position_ID4 = int((degree4 / 360.0) * 4095)
+        # if self.error4 > 0:
+        #     VELOCITY_ID4 = P_GAIN * self.error4 * VELOCITY_PER_RESOLUTION
+        # else:
+        #     VELOCITY_ID4 = -P_GAIN * self.error4 * VELOCITY_PER_RESOLUTION
+        
+        # goal_position_ID5 = int((degree5 / 360.0) * 4095)
+        # if self.error5 > 0:
+        #     VELOCITY_ID5 = -P_GAIN * self.error5 * VELOCITY_PER_RESOLUTION
+        # else:
+        #     VELOCITY_ID5 = P_GAIN * self.error5 * VELOCITY_PER_RESOLUTION
+
+        # print(goal_position_ID3)
+        # print(initial_present_position_ID3)
+
+        # # Write goal position
+        # self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID1, self.ADDR_GOAL_VELOCITY, int(VELOCITY_ID1))
+        # self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID2, self.ADDR_GOAL_VELOCITY, int(VELOCITY_ID2))
+        # self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID3, self.ADDR_GOAL_VELOCITY, int(VELOCITY_ID3))
+        # self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID4, self.ADDR_GOAL_VELOCITY, int(VELOCITY_ID4))
+        # self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID5, self.ADDR_GOAL_VELOCITY, int(VELOCITY_ID5))
 
         flag1 = False
         flag2 = False
@@ -199,11 +237,30 @@ class Motor:
         # print(f'ID4 -> goal angle : {(goal_position_ID4 / 4095) * 360}, present angle : {(present_position_ID4 / 4095) * 360}')
         # print(f'ID5 -> goal angle : {(goal_position_ID5 / 4095) * 360}, present angle : {(present_position_ID5 / 4095) * 360}')
 
+        # if abs(goal_position_ID1 - present_position_ID1) < 100:
+        #     self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID1, self.ADDR_GOAL_VELOCITY, 0)
+            
+        # if abs(goal_position_ID2 - present_position_ID2) < 100:
+        #     self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID2, self.ADDR_GOAL_VELOCITY, 0)
+            
+        # if abs(goal_position_ID3 - present_position_ID3) < 200:
+        #     self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID3, self.ADDR_GOAL_VELOCITY, 0)
+            
+        # if abs(goal_position_ID4 - present_position_ID4) < 100:
+        #     self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID4, self.ADDR_GOAL_VELOCITY, 0)
+            
+        # if abs(goal_position_ID5 - present_position_ID5) < 100:
+        #     self.packetHandler.write4ByteTxRx(self.portHandler, self.DXL_ID5, self.ADDR_GOAL_VELOCITY, 0)
+            
+        # if flag1 and flag2 and flag3 and flag4 and flag5:
+            # break
+
+        # print(
+        #     f'flag1 : {flag1}, flag2 : {flag2}, flag3 : {flag3}, flag4 : {flag4}, flag5 : {flag5}')
         print( "criteria : %d, error1 : %d, error2 : %d, error3 : %d, error4 : %d, error5 : %d" % (CRITERIA, abs(self.error1),abs(self.error2), abs(self.error3), abs(self.error4), abs(self.error5)))
 
     def Is_it_tracking(self):
-        # if (abs(self.error1) < CRITERIA) and (abs(self.error2) < CRITERIA) and (abs(self.error3) < CRITERIA) and (abs(self.error4) < CRITERIA) and (abs(self.error5) < CRITERIA) and (abs(self.error6) < CRITERIA): @@add@@
-        if (abs(self.error1) < CRITERIA) and (abs(self.error2) < CRITERIA) and (abs(self.error3) < CRITERIA) and (abs(self.error4) < CRITERIA) and (abs(self.error5) < CRITERIA):
+        if (abs(self.error1) < CRITERIA) and (abs(self.error2) < CRITERIA) and (abs(self.error3) < CRITERIA) and (abs(self.error4) < CRITERIA) and (abs(self.error5) < CRITERIA) and (abs(self.error5) < CRITERIA):
             print("No Tracking IS DONE!!!!")
             return False
         else:
@@ -211,7 +268,4 @@ class Motor:
             return True
     
     def Is_it_gripped(self):
-        if abs(self.error7 < 1*DEGREE_TO_DISCRETE):
-            return True
-        else:
-            return False
+        return 0
